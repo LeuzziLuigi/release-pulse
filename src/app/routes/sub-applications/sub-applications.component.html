@@ -1,0 +1,74 @@
+<div class="px-8">
+  <div class="flex justify-between items-center">
+    <div>
+      <h1 class="text-base font-semibold text-gray-900">Sub-Applications</h1>
+      <p class="mt-2 text-sm text-gray-700">A list of Sub-Applications</p>
+    </div>
+    <div class="mt-4">
+      <button type="button" class="btn" (click)="openApplicationModal()">Add Sub-Application</button>
+    </div>
+  </div>
+  <div class="mt-8 flow-root">
+    <div class="-my-2 overflow-x-auto -6 -mx-8">
+      <div class="inline-block min-w-full py-2 align-middle px-8">
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold">Name</th>
+              <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold">Pipeline Url</th>
+              <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold">Server Folder Path</th>
+              <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold">Health Check Url</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Application Id</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Created</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Updated</th>
+              <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white">
+            @for (subApplication of subApplications; track subApplication) {
+              <tr class="even:bg-gray-50">
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">{{ subApplication.name }}</td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">{{ subApplication.pipelineUrl }}</td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">{{ subApplication.serverFolderPath }}</td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">{{ subApplication.healthCheckUrl }}</td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">{{ subApplication.applicationId }}</td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">
+                  <div>{{ subApplication.createdTs | formatDate }}</div>
+                  <div>{{ subApplication.createdBy }}</div>
+                </td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">
+                  <div>{{ subApplication.updatedTs ? (subApplication.updatedTs | formatDate) : "None" }}</div>
+                  <div>{{ subApplication.updatedBy }}</div>
+                </td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap text-right">
+                  <i class="fal fa-edit mr-3.5 scale-120" (click)="openApplicationModal(subApplication)"></i>
+                  <i class="fal fa-trash mr-1 scale-120" (click)="onDeleteSubApplication(subApplication, $index)"></i>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+        @if (subApplications.length == 0) {
+          <div class="flex justify-center p-2 bg-gray-100">
+            @if (isLoaded()) {
+              <div>No sub-applications found</div>
+            } @else {
+              <app-spinner></app-spinner>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (isAddingApplication()) {
+  <app-modal (close)="closeSubApplicationModal()">
+    <app-sub-application
+      (cancel)="closeSubApplicationModal()"
+      (addSubApplication)="onAddSubApplication($event)"
+      (updateSubApplication)="onUpdateSubApplication($event)"
+      [subApplication]="currentSubApplication"
+    ></app-sub-application>
+  </app-modal>
+}

@@ -1,0 +1,77 @@
+<div class="px-8">
+    <div class="flex justify-between items-center">
+      <div>
+        <h1 class="text-base font-semibold text-gray-900">Applications</h1>
+        <p class="mt-2 text-sm text-gray-700">A list of Applications</p>
+      </div>
+      <div class="mt-4">
+        <button type="button" class="btn" (click)="openApplicationModal()">Add Application</button>
+      </div>
+    </div>
+    <div class="mt-8 flow-root">
+      <div class="-my-2 overflow-x-auto -6 -mx-8">
+        <div class="inline-block min-w-full py-2 align-middle px-8">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead>
+              <tr>
+                <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold">Name</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Project Id</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Repo Id</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Created</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Updated</th>
+                <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white">
+              @for (application of applications; track application) {
+                <tr class="even:bg-gray-50">
+                  <td class="py-4 pr-3 pl-4 whitespace-nowrap">{{ application.name }}</td>
+                  <td class="py-4 pr-3 pl-4 whitespace-nowrap">{{ application.projectId }}</td>
+                  <td class="py-4 pr-3 pl-4 whitespace-nowrap">{{ application.repositoryId }}</td>
+                  <td class="py-4 pr-3 pl-4 whitespace-nowrap">
+                    <div>{{ application.createdTs | formatDate }}</div>
+                    <div>{{ application.createdBy }}</div>
+                  </td>
+                  <td class="py-4 pr-3 pl-4 whitespace-nowrap">
+                    <div>{{ application.updatedTs ? (application.updatedTs | formatDate) : "None" }}</div>
+                    <div>{{ application.updatedBy }}</div>
+                  </td>
+                  <td class="py-4 pr-3 pl-4 whitespace-nowrap text-right">
+                    <i
+                      class="fal fa-edit text-secondary-500 hover:text-secondary-800 mr-3.5 scale-120"
+                      (click)="openApplicationModal(application)"
+                    ></i>
+                    <i
+                      class="fal fa-trash text-negative-500 hover:text-negative-800 mr-1 scale-120"
+                      (click)="onDeleteApplication(application, $index)"
+                    ></i>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+          @if (applications.length == 0) {
+            <div class="flex justify-center p-2 bg-gray-100">
+              @if (isLoaded()) {
+                <div>No applications found</div>
+              } @else {
+                <app-spinner></app-spinner>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  @if (isAddingApplication()) {
+    <app-modal (close)="closeApplicationModal()">
+      <app-application
+        (cancel)="closeApplicationModal()"
+        (addApplication)="onAddApplication($event)"
+        (updateApplication)="onUpdateApplication($event)"
+        [application]="currentApplication"
+      ></app-application>
+    </app-modal>
+  }
+  

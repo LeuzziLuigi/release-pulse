@@ -1,19 +1,202 @@
 @import "tailwindcss";
 
-@theme {
-    /*
-    resets
-    --color-*: initial;
-    --font-size-*: initial;
-    */
-    --color-primary: #3ecd59;
-    --color-secondary: #ededed;
-}
-
 html {
-    @apply h-full bg-white
+  @apply h-full bg-white;
 }
 
 body {
-    @apply h-full
+  @apply h-full;
+}
+@theme {
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #ededed;
+  --color-gray-200: #e4e6e9;
+  --color-gray-300: #dbdee1;
+  --color-gray-400: #9fa0a4;
+  --color-gray-500: #626469;
+  --color-gray-600: #505559;
+  --color-gray-700: #434343;
+  --color-gray-800: #333333;
+  --color-gray-900: #0f0f0f;
+ 
+  --color-green-50: #f0fff2;
+  --color-green-100: #78a988;
+  --color-green-400: #3dcd58;
+  --color-green-500: #32ad3c;
+  --color-green-600: #009530;
+  --color-green-700: #007626;
+  --color-green-800: #006320;
+  --color-green-900: #00561c;
+ 
+  --color-blue-50: #e6f6fd;
+  --color-blue-500: #0098d9;
+ 
+  --color-red-50: #ffd8cc;
+  --color-red-500: #d32f2f;
+ 
+  --color-yellow-500: #ffe600;
+ 
+  --font-sans: Nunito, sans-serif;
+ 
+  --background-image-watermark: url('/img/watermark.svg');
+ 
+  --background-position-right-top-outset-2: top -2px right -2px;
+ 
+  --transition-property-size: height, width, flex-basis;
+
+  --color-primary: var(--color-primary-500);
+  --color-secondary: var(--color-secondary-500);
+  --color-info: var(--color-info-500);
+  --color-positive: var(--color-green-500);
+  --color-negative: var(--color-negative-500);
+  --color-notice: var(--color-notice-500);
+  --color-smoke: #eeeeee;
+
+  --color-primary-50: var(--color-green-50);
+  --color-primary-100: var(--color-green-100);
+  --color-primary-200: var(--color-green-200);
+  --color-primary-300: var(--color-green-300);
+  --color-primary-400: var(--color-green-400);
+  --color-primary-500: var(--color-green-500);
+  --color-primary-600: var(--color-green-600);
+  --color-primary-700: var(--color-green-700);
+  --color-primary-800: var(--color-green-800);
+  --color-primary-900: var(--color-green-900);
+  --color-primary-950: var(--color-green-950);
+  
+  --color-secondary-50: var(--color-blue-50);
+  --color-secondary-100: var(--color-blue-100);
+  --color-secondary-200: var(--color-blue-200);
+  --color-secondary-300: var(--color-blue-300);
+  --color-secondary-400: var(--color-blue-400);
+  --color-secondary-500: var(--color-blue-500);
+  --color-secondary-600: var(--color-blue-600);
+  --color-secondary-700: var(--color-blue-700);
+  --color-secondary-800: var(--color-blue-800);
+  --color-secondary-900: var(--color-blue-900);
+  --color-secondary-950: var(--color-blue-950);
+  
+  --color-info-50: var(--color-orange-50);
+  --color-info-100: var(--color-orange-100);
+  --color-info-200: var(--color-orange-200);
+  --color-info-300: var(--color-orange-300);
+  --color-info-400: var(--color-orange-400);
+  --color-info-500: var(--color-orange-500);
+  --color-info-600: var(--color-orange-600);
+  --color-info-700: var(--color-orange-700);
+  --color-info-800: var(--color-orange-800);
+  --color-info-900: var(--color-orange-900);
+  --color-info-950: var(--color-orange-950);
+  
+  --color-positive-50: var(--color-green-50);
+  --color-positive-100: var(--color-green-100);
+  --color-positive-200: var(--color-green-200);
+  --color-positive-300: var(--color-green-300);
+  --color-positive-400: var(--color-green-400);
+  --color-positive-500: var(--color-green-500);
+  --color-positive-600: var(--color-green-600);
+  --color-positive-700: var(--color-green-700);
+  --color-positive-800: var(--color-green-800);
+  --color-positive-900: var(--color-green-900);
+  --color-positive-950: var(--color-green-950);
+  
+  --color-negative-50: var(--color-red-50);
+  --color-negative-100: var(--color-red-100);
+  --color-negative-200: var(--color-red-200);
+  --color-negative-300: var(--color-red-300);
+  --color-negative-400: var(--color-red-400);
+  --color-negative-500: var(--color-red-500);
+  --color-negative-600: var(--color-red-600);
+  --color-negative-700: var(--color-red-700);
+  --color-negative-800: var(--color-red-800);
+  --color-negative-900: var(--color-red-900);
+  --color-negative-950: var(--color-red-950);
+  
+  --color-notice-50: var(--color-yellow-50);
+  --color-notice-100: var(--color-yellow-100);
+  --color-notice-200: var(--color-yellow-200);
+  --color-notice-300: var(--color-yellow-300);
+  --color-notice-400: var(--color-yellow-400);
+  --color-notice-500: var(--color-yellow-500);
+  --color-notice-600: var(--color-yellow-600);
+  --color-notice-700: var(--color-yellow-700);
+  --color-notice-800: var(--color-yellow-800);
+  --color-notice-900: var(--color-yellow-900);
+  --color-notice-950: var(--color-yellow-950);
+}
+
+@utility btn {
+  @apply justify-center rounded-md bg-positive-500 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-positive-600 active:bg-positive-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-positive;
+
+  &.btn-alt {
+    @apply ring-gray-300 ring-inset ring-1 shadow-xs border-gray-300 bg-transparent text-black hover:bg-gray-200 active:bg-gray-400 focus:border-primary-100;
+  }
+
+  &.btn-link {
+    @apply border-transparent bg-transparent text-blue-500 hover:underline;
+  }
+
+  &.btn-lg {
+    @apply h-9 px-3.5 text-base;
+  }
+
+  &.btn-sm {
+    @apply h-7 px-3;
+  }
+
+  &.btn-icon {
+    @apply size-8 justify-center p-0;
+  }
+
+  &:disabled {
+    @apply border-gray-300 bg-gray-300 text-gray-400;
+  }
+
+  &.btn-secondary:disabled {
+    @apply border-gray-300 bg-transparent;
+  }
+
+  &.btn-link:disabled {
+    @apply border-transparent bg-transparent;
+  }
+}
+
+@utility input {
+  @apply block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-600 sm:text-sm/6;
+
+  &.ng-invalid.ng-touched {
+    @apply outline-negative;
+  }
+}
+
+@utility select {
+  @apply col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-600 sm:text-sm/6;
+  &.ng-invalid {
+    @apply text-gray-400 focus:text-gray-900;
+    &.ng-touched {
+      @apply outline-negative;
+    }
+  }
+  
+}
+
+@utility fa-edit {
+  @apply text-secondary-500 hover:text-secondary-800;
+}
+
+@utility fa-trash {
+  @apply text-negative-500 hover:text-negative-800;
+}
+
+
+@utility table {
+  @apply border-separate border-spacing-0;
+
+  & th:not(.reset) {
+    @apply border border-l-0 border-gray-200 bg-gray-50 p-0 text-sm font-medium text-gray-500 first:rounded-s-lg first:border-l last:rounded-e-lg;
+  }
+
+  & td:not(.reset) {
+    @apply border-b border-gray-200 text-sm;
+  }
 }

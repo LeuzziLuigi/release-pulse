@@ -1,0 +1,82 @@
+<div class="px-8">
+  <div class="flex justify-between items-center">
+    <div>
+      <h1 class="text-base font-semibold text-gray-900">Repositorys</h1>
+      <p class="mt-2 text-sm text-gray-700">A list of Repositorys</p>
+    </div>
+    <div class="mt-4">
+      <button type="button" class="btn" (click)="openRepositoryModal()">Add Repository</button>
+    </div>
+  </div>
+  <div class="mt-8 flow-root">
+    <div class="-my-2 overflow-x-auto -6 -mx-8">
+      <div class="inline-block min-w-full py-2 align-middle px-8">
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold">Name</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Path</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Source Cd</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Is Active</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Created</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Updated</th>
+              <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white">
+            @for (repository of repositories; track repository) {
+              <tr class="even:bg-gray-50">
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">
+                  {{ repository.name }}
+                </td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">
+                  {{ repository.path }}
+                </td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">
+                  {{ repository.sourceCd }}
+                </td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">
+                  {{ repository.isActive }}
+                </td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">
+                  <div>{{ repository.createdTs | formatDate }}</div>
+                  <div>{{ repository.createdBy }}</div>
+                </td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">
+                  <div>
+                    {{ repository.updatedTs ? (repository.updatedTs | formatDate) : "None" }}
+                  </div>
+                  <div>{{ repository.updatedBy }}</div>
+                </td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap text-right">
+                  <i class="fal fa-edit mr-3.5 scale-120" (click)="openRepositoryModal(repository)"></i>
+                  <i class="fal fa-trash mr-1 scale-120" (click)="onDeleteRepository(repository, $index)"></i>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+        @if (repositories.length == 0) {
+          <div class="flex justify-center p-2 bg-gray-100">
+            @if (isLoaded()) {
+              <div>No repositories found</div>
+            } @else {
+              <app-spinner></app-spinner>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (isAddingRepository()) {
+  <app-modal (close)="closeRepositoryModal()">
+    <app-repository
+      (cancel)="closeRepositoryModal()"
+      (addRepository)="onAddRepository($event)"
+      (updateRepository)="onUpdateRepository($event)"
+      [repository]="currentRepository"
+    ></app-repository>
+  </app-modal>
+}

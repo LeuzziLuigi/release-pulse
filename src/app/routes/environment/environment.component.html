@@ -1,0 +1,72 @@
+<div class="px-8">
+  <div class="flex justify-between items-center">
+    <div>
+      <h1 class="text-base font-semibold text-gray-900">Environments</h1>
+      <p class="mt-2 text-sm text-gray-700">A list of Environments</p>
+    </div>
+    <div class="mt-4">
+      <button type="button" class="btn" (click)="openApplicationModal()">Add Environment</button>
+    </div>
+  </div>
+  <div class="mt-8 flow-root">
+    <div class="-my-2 overflow-x-auto -6 -mx-8">
+      <div class="inline-block min-w-full py-2 align-middle px-8">
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold">Name</th>
+              <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold">Is Active</th>
+              <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold">Description</th>
+              <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold">Branch Name</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Created</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Updated</th>
+              <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white">
+            @for (environment of environments; track environment) {
+              <tr class="even:bg-gray-50">
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">{{ environment.name }}</td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">{{ environment.isActive }}</td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">{{ environment.description }}</td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">{{ environment.branchName }}</td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">
+                  <div>{{ environment.createdTs | formatDate }}</div>
+                  <div>{{ environment.createdBy }}</div>
+                </td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap">
+                  <div>{{ environment.updatedTs ? (environment.updatedTs | formatDate) : "None" }}</div>
+                  <div>{{ environment.updatedBy }}</div>
+                </td>
+                <td class="py-4 pr-3 pl-4 whitespace-nowrap text-right">
+                  <i class="fal fa-edit mr-3.5 scale-120" (click)="openApplicationModal(environment)"></i>
+                  <i class="fal fa-trash mr-1 scale-120" (click)="onDeleteEnvironment(environment, $index)"></i>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+        @if (environments.length == 0) {
+          <div class="flex justify-center p-2 bg-gray-100">
+            @if (isLoaded()) {
+              <div>No environments found</div>
+            } @else {
+              <app-spinner></app-spinner>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (isAddingApplication()) {
+  <app-modal (close)="closeEnvironmentModal()">
+    <app-environment
+      (cancel)="closeEnvironmentModal()"
+      (addEnvironment)="onAddEnvironment($event)"
+      (updateEnvironment)="onUpdateEnvironment($event)"
+      [environment]="currentEnvironment"
+    ></app-environment>
+  </app-modal>
+}
