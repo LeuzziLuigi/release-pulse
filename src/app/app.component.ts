@@ -43,11 +43,6 @@ export class AppComponent implements OnInit {
       icon: 'fa-user-crown',
       route: '/apps'
     },
-    {
-      name: 'Sub-apps',
-      icon: 'fa-user-group-crown',
-      route: '/sub-apps'
-    },
   ];
 
   activeIndex = 0
