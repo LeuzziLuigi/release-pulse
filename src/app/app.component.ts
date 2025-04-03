@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
       name: 'Environments',
       icon: 'fa-regular fa-seedling',
       route: '/environments'
-    },,
+    },
     {
       name: 'Apps',
       icon: 'fa-user-crown',
